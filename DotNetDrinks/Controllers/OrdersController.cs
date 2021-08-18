@@ -66,6 +66,20 @@ namespace DotNetDrinks.Controllers
             return View(order);
         }
 
+        public IActionResult SalesReport() {
+
+            var totalOrders = _context.Orders.ToList().Count;
+
+            ViewBag.totalOrders = totalOrders;
+
+            var totalRevenue = _context.Orders.Select(e => e.Total).Sum();
+
+            ViewBag.totalRevenue = totalRevenue;
+
+            return View();
+        }
+
+
         private bool OrderExists(int id)
         {
             return _context.Orders.Any(e => e.Id == id);
