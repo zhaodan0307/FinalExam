@@ -49,8 +49,9 @@
             @* As a general rule, numbers are right-aligned when shown in a table *@
         <td class="text-right">
             <form method="post" action="/Store/UpdateCart">
+                <input type="hidden" id="CartId" name="CartId" value="@item.Id" />
                 <input name="Quantity" id="Quantity" required
-                       type="number" min="1" max="999" value="@item.Quantity"/>
+                       type="number" min="1" max="999" value="@item.Quantity" />
                 <button class="btn btn-primary">Update Cart</button>
             </form>
                 

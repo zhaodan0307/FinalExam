@@ -85,13 +85,14 @@ namespace DotNetDrinks.Controllers
             return Redirect("Cart");
         }
 
-        public IActionResult UpdateCart(int ProductId, int Quantity)
+        public IActionResult UpdateCart(int CartId, int Quantity)
         {
-            // query db to get product price, use LINQ
-            var price = _context.Products.Find(ProductId).Price;
-            // get or generate a customerid
-            string customerId = GetCustomerId();
 
+
+            var getCart = _context.Carts.Find(CartId);
+            getCart.Quantity = Quantity;
+
+            _context.SaveChanges();
 
             // redirect to Cart view          
             return Redirect("Cart");
