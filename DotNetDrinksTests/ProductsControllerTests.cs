@@ -98,5 +98,23 @@ namespace DotNetDrinksTests
 
         }
 
+        [TestMethod]
+
+        public void DeleteComfirmPost() {
+
+            var id = 103;
+            
+            // Asynch method returns wrapper around result object
+            var result = controller.DeleteConfirmed(id); 
+            // Assert that product is in DB
+            // Select by name
+            var prod = _context.Products
+                .Where(p => p.Id==id)
+                .FirstOrDefault();
+            // if found then prod is not null
+            Assert.IsNull(prod);
+
+        }
+
     }
 }
