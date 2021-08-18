@@ -12,7 +12,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Product)
             </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.Product.Image)</th>
             <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
@@ -25,30 +25,46 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    <a asp-controller="Products"
-                       asp-action="Details"
-                       asp-route-id="@item.ProductId">
-                        @item.Product.Name
-                    </a>
-                </td>
-                <td>
-                    @* ADD IMG HERE *@
-                </td>
-                @* As a general rule, numbers are right-aligned when shown in a table *@
-                <td class="text-right">
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td class="text-right">
-                    @* use generic C format provider to format decimal to currency *@
-                    @item.Price.ToString("C")
-                </td>
-                <td>
-                    @* asp-controller by default is the same as the folder where view is *@
-                    <a asp-action="RemoveFromCart" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <a asp-controller="Products"
+                   asp-action="Details"
+                   asp-route-id="@item.ProductId">
+                    @item.Product.Name
+                </a>
+            </td>
+            <td>
+                @if (item.Product.Image != null)
+                {
+                <a href="~/img/products/@item.Product.Image" rel="lightbox">
+                    <img src="~/img/products/@item.Product.Image" alt="Product Image" class="img-thumbnail" />
+                </a>
+                    
+                }
+                else
+                {
+                    <img src="~/img/products/placeholder.gif" alt="Product Image" class="img-thumbnail" />
+                }
+            </td>
+            @* As a general rule, numbers are right-aligned when shown in a table *@
+        <td class="text-right">
+            <form method="post" action="/Store/UpdateCart">
+                <input name="Quantity" id="Quantity" required
+                       type="number" min="1" max="999" value="@item.Quantity"/>
+                <button class="btn btn-primary">Update Cart</button>
+            </form>
+                
+
+        </td>
+            <td class="text-right">
+                @* use generic C format provider to format decimal to currency *@
+                @item.Price.ToString("C")
+            </td>
+            <td>
+                @* asp-controller by default is the same as the folder where view is *@
+                <a asp-action="RemoveFromCart" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
         }
         <tr>
             <td colspan="4" class="text-right">@ViewBag.TotalAmount</td>

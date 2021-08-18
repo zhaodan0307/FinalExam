@@ -29,6 +29,13 @@ namespace DotNetDrinks.Controllers
             return View("Privacy");
         }
 
+        public IActionResult ContactUs()
+        {
+            // When testing view results, make sure to specify view name
+            return View();
+           
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
